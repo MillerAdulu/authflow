@@ -68,12 +68,14 @@ class _HomeParentState extends State<HomeParent> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         final result = snapshot.data;
 
-        if (result?.isExecuting)
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+        if (result != null) {
+          if (result.isExecuting)
+            return Center(
+              child: CircularProgressIndicator(),
+            );
 
-        if (result?.hasError) return _buildPage();
+          if (result.hasError) return _buildPage();
+        }
 
         return _buildPage();
       },
