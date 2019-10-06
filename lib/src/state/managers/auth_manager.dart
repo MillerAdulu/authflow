@@ -9,7 +9,6 @@ import 'package:authflow/src/utils/service_locator.dart';
 abstract class AuthManager {
   RxCommand<AuthStatus, AuthStatus> authStatus;
   RxCommand<Map, bool> signInUser;
-  RxCommand<Map, bool> signUpUser;
   RxCommand<void, bool> signOutUser;
   RxCommand<void, bool> fetchSavedCredentials;
 
@@ -31,9 +30,6 @@ class AuthManagerInstance implements AuthManager {
   RxCommand<Map, bool> signInUser;
 
   @override
-  RxCommand<Map, bool> signUpUser;
-
-  @override
   RxCommand<void, bool> fetchSavedCredentials;
 
   @override
@@ -53,8 +49,6 @@ class AuthManagerInstance implements AuthManager {
       print("My ${authResult.data} is saved to local storage or database");
       authStatus(AuthStatus.LOGGED_IN);
     });
-
-    signUpUser = RxCommand.createAsync<Map, bool>(sl<APIService>().signUpUser);
 
     signOutUser = RxCommand.createAsyncNoParam<bool>(() {
       var rnd = new Random();
@@ -81,6 +75,16 @@ class AuthManagerInstance implements AuthManager {
       Future.delayed(Duration(seconds: 5));
       print("Finished fetching");
       return Future.value(false);
+    });
+
+    email = RxCommand.createAsync<String, String>((emailValue) {
+      print(emailValue);
+      return Future.value(emailValue);
+    });
+
+    password = RxCommand.createAsync<String, String>((passwordValue) {
+      print(passwordValue);
+      return Future.value(passwordValue);
     });
   }
 }
