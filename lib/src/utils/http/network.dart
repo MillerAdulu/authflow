@@ -88,7 +88,7 @@ class NetworkUtil {
       'file': http.MultipartFile.fromPath(
           "application/octet-stream", "MyFileLocation.txt")
     };
-    FormData formData = new FormData.fromMap(body);
+    FormData formData = new FormData.from(body);
 
     Dio dio = new Dio();
 

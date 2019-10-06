@@ -136,8 +136,11 @@ class _SignInState extends State<SignIn> {
                           width: double.maxFinite,
                           height: 50,
                           child: FlatButton(
-                            color: Colors.grey,
-                            child: Text('Sign In'),
+                            color: Colors.blue,
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(color: Colors.white,fontSize: 20),
+                            ),
                             onPressed: () {
                               final credentials = new Map();
                               credentials['email'] = _emailController.text;
