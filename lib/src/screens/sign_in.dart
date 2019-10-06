@@ -78,6 +78,7 @@ class _SignInState extends State<SignIn> {
       onWillPop: _onWillPopScope,
       child: Scaffold(
         body: SingleChildScrollView(
+          padding: EdgeInsets.only(left: 16, right: 16, top: 40),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -87,6 +88,9 @@ class _SignInState extends State<SignIn> {
                 alignment: AlignmentDirectional.center,
                 child: Text(
                   'Login',
+                  style: TextStyle(
+                    fontSize: 48,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -126,15 +130,20 @@ class _SignInState extends State<SignIn> {
                           );
                         },
                       ),
-                      FlatButton(
-                        child: Text('Sign In'),
-                        onPressed: () {
-                          final credentials = new Map();
-                          credentials['email'] = _emailController.text;
-                          credentials['password'] = _passwordController.text;
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: 50,
+                        child: FlatButton(
+                          color: Colors.grey,
+                          child: Text('Sign In'),
+                          onPressed: () {
+                            final credentials = new Map();
+                            credentials['email'] = _emailController.text;
+                            credentials['password'] = _passwordController.text;
 
-                          sl<AuthManager>().signInUser(credentials);
-                        },
+                            sl<AuthManager>().signInUser(credentials);
+                          },
+                        ),
                       ),
                     ],
                   ),
