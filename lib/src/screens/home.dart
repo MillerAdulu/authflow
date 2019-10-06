@@ -1,10 +1,9 @@
-import 'package:authflow/src/models/auth.dart';
+import 'package:flutter/material.dart';
+import 'package:rx_command/rx_command.dart';
+
 import 'package:authflow/src/screens/decision.dart';
 import 'package:authflow/src/state/managers/auth_manager.dart';
 import 'package:authflow/src/utils/service_locator.dart';
-import 'package:flutter/material.dart';
-
-import 'package:rx_command/rx_command.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -63,7 +62,7 @@ class _HomeParentState extends State<HomeParent> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<CommandResult<AuthResult>>(
+    return StreamBuilder<CommandResult<bool>>(
       stream: sl<AuthManager>().signOutUser.results,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         final result = snapshot.data;

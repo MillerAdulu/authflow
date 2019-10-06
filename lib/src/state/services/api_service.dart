@@ -15,7 +15,8 @@ class APIServiceInstance implements APIService {
   String baseUrl = 'http://example.com/api';
 
   @override
-  Future signInUser(Map credentials) async {
+  Future<bool> signInUser(Map credentials) async {
+    print("Credentials: $credentials");
     // TODO: Uncomment the API call
     // final String signInUrl = '$baseUrl/auth/signin';
 
@@ -28,16 +29,18 @@ class APIServiceInstance implements APIService {
     // return response;
 
     // Delays the sign in for a bit to mock an API call
-    Future.delayed(Duration(seconds: 4));
-
+    print("Starting fetch");
+    Future.delayed(Duration(seconds: 5));
+    print("Ending fetch");
     // Mocks validation from the API.
     // True: Successful sign in
     // False: Failed sign in
-    return rnd.nextBool();
+    return Future.value(rnd.nextBool());
   }
 
   @override
-  Future signUpUser(Map credentials) async {
+  Future<bool> signUpUser(Map credentials) async {
+    print("Credentials: $credentials");
     // TODO: Uncomment the API call
     // final String signUpUrl = '$baseUrl/auth/signup';
 
@@ -55,6 +58,6 @@ class APIServiceInstance implements APIService {
     // Mocks validation from the API.
     // True: Successful sign in
     // False: Failed sign in
-    return rnd.nextBool();
+    return Future.value(rnd.nextBool());
   }
 }
