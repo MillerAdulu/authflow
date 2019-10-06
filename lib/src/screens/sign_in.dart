@@ -82,7 +82,6 @@ class _SignInState extends State<SignIn> {
         body: SingleChildScrollView(
           padding: EdgeInsets.only(left: 16, right: 16, top: 40),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
@@ -131,19 +130,23 @@ class _SignInState extends State<SignIn> {
                           );
                         },
                       ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        height: 50,
-                        child: FlatButton(
-                          color: Colors.grey,
-                          child: Text('Sign In'),
-                          onPressed: () {
-                            final credentials = new Map();
-                            credentials['email'] = _emailController.text;
-                            credentials['password'] = _passwordController.text;
+                      Container(
+                        margin: EdgeInsets.only(top: 40),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          height: 50,
+                          child: FlatButton(
+                            color: Colors.grey,
+                            child: Text('Sign In'),
+                            onPressed: () {
+                              final credentials = new Map();
+                              credentials['email'] = _emailController.text;
+                              credentials['password'] =
+                                  _passwordController.text;
 
-                            sl<AuthManager>().signInUser(credentials);
-                          },
+                              sl<AuthManager>().signInUser(credentials);
+                            },
+                          ),
                         ),
                       ),
                     ],
