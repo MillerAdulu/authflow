@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:rx_command/rx_command.dart';
+import 'package:rxdart/subjects.dart';
 
 import 'package:authflow/src/models/auth.dart';
 import 'package:authflow/src/state/services/api_service.dart';
 import 'package:authflow/src/utils/service_locator.dart';
+import 'package:authflow/src/utils/validators/email_validator.dart';
+import 'package:authflow/src/utils/validators/password_validator.dart';
 
 abstract class AuthManager {
   RxCommand<AuthStatus, AuthStatus> authStatus;
@@ -12,17 +15,15 @@ abstract class AuthManager {
   RxCommand<void, bool> signOutUser;
   RxCommand<void, bool> fetchSavedCredentials;
 
-  RxCommand<String, String> email;
-  RxCommand<String, String> password;
+  Function(String) get onEmailChanged;
+  Stream<String> get email;
+  Function(String) get onPasswordChanged;
+  Stream<String> get password;
 }
 
-class AuthManagerInstance implements AuthManager {
-  @override
-  RxCommand<String, String> email;
-
-  @override
-  RxCommand<String, String> password;
-
+class AuthManagerInstance
+    with EmailValidator, PasswordValidator
+    implements AuthManager {
   @override
   RxCommand<AuthStatus, AuthStatus> authStatus;
 
@@ -76,15 +77,19 @@ class AuthManagerInstance implements AuthManager {
       print("Finished fetching");
       return Future.value(false);
     });
+  }
 
-    email = RxCommand.createAsync<String, String>((emailValue) {
-      print(emailValue);
-      return Future.value(emailValue);
-    });
+  final PublishSubject<String> _emailController = PublishSubject<String>();
+  Function(String) get onEmailChanged => _emailController.sink.add;
+  Stream<String> get email => _emailController.stream.transform(validateEmail);
 
-    password = RxCommand.createAsync<String, String>((passwordValue) {
-      print(passwordValue);
-      return Future.value(passwordValue);
-    });
+  final PublishSubject<String> _passwordController = PublishSubject<String>();
+  Function(String) get onPasswordChanged => _passwordController.sink.add;
+  Stream<String> get password =>
+      _passwordController.stream.transform(validatePassword);
+
+  void dispose() {
+    _emailController?.close();
+    _passwordController?.close();
   }
 }

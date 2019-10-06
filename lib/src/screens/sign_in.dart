@@ -35,6 +35,8 @@ class _SignInState extends State<SignIn> {
   void dispose() {
     _signInListener?.dispose();
     _authStatusListener?.dispose();
+    _emailController?.dispose();
+    _passwordController?.dispose();
     super.dispose();
   }
 
@@ -109,9 +111,8 @@ class _SignInState extends State<SignIn> {
                           return TextField(
                             controller: _emailController,
                             decoration: InputDecoration(
-                                labelText: 'Email',
-                                errorText: snapshot.error.toString()),
-                            onChanged: sl<AuthManager>().email,
+                                labelText: 'Email', errorText: snapshot.error),
+                            onChanged: sl<AuthManager>().onEmailChanged,
                             keyboardType: TextInputType.emailAddress,
                           );
                         },
@@ -124,8 +125,8 @@ class _SignInState extends State<SignIn> {
                             controller: _passwordController,
                             decoration: InputDecoration(
                                 labelText: 'Password',
-                                errorText: snapshot.error.toString()),
-                            onChanged: sl<AuthManager>().password,
+                                errorText: snapshot.error),
+                            onChanged: sl<AuthManager>().onPasswordChanged,
                             obscureText: true,
                           );
                         },
