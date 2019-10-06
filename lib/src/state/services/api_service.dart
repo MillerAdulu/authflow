@@ -10,7 +10,7 @@ abstract class APIService {
 class APIServiceInstance implements APIService {
   NetworkUtil _networkUtil = new NetworkUtil();
 
-  var rng = new Random();
+  var rnd = new Random();
 
   String baseUrl = 'http://example.com/api';
 
@@ -33,7 +33,7 @@ class APIServiceInstance implements APIService {
     // Mocks validation from the API.
     // True: Successful sign in
     // False: Failed sign in
-    return rng.nextBool();
+    return rnd.nextBool();
   }
 
   @override
@@ -55,6 +55,6 @@ class APIServiceInstance implements APIService {
     // Mocks validation from the API.
     // True: Successful sign in
     // False: Failed sign in
-    return rng.nextBool();
+    return rnd.nextBool();
   }
 }
