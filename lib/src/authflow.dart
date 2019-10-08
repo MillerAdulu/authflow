@@ -7,6 +7,7 @@ class AuthFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Auth Flow',
+      debugShowCheckedModeBanner: false,
       home: DecisionPage(),
     );
   }
