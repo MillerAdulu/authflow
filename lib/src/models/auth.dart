@@ -1,3 +1,1 @@
-enum AuthStatus {
-  LOGGED_OUT, LOGGED_IN
-}
+enum AuthStatus { LOGGED_OUT, LOGGED_IN }

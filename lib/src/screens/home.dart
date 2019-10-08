@@ -84,9 +84,12 @@ class _HomeParentState extends State<HomeParent> {
   Widget _buildPage() {
     return Center(
       child: FlatButton(
-        padding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 15.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         color: Colors.red,
-        child: Text('Sign Out',style: TextStyle(fontSize: 22,color: Colors.white),),
+        child: Text(
+          'Sign Out',
+          style: TextStyle(fontSize: 22, color: Colors.white),
+        ),
         onPressed: signOut,
       ),
     );
