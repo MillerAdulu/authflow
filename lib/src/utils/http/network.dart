@@ -28,6 +28,7 @@ class NetworkUtil {
         headers: {
           ...basicHeaders,
         },
+        body: body,
         encoding: encoding);
 
     final String responseBody = response.body;
@@ -43,6 +44,7 @@ class NetworkUtil {
         headers: {
           ...basicHeaders,
         },
+        body: body,
         encoding: encoding);
 
     final String responseBody = response.body;
@@ -58,6 +60,7 @@ class NetworkUtil {
         headers: {
           ...basicHeaders,
         },
+        body: body,
         encoding: encoding);
 
     final String responseBody = response.body;
@@ -67,7 +70,7 @@ class NetworkUtil {
     return json.decode(responseBody);
   }
 
-  Future<dynamic> deleteReq(String url, {Map body, encoding}) async {
+  Future<dynamic> deleteReq(String url) async {
     final basicHeaders = await setBasicHeaders();
     http.Response response = await http.delete(url, headers: {
       ...basicHeaders,
