@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rx_command/rx_command_listener.dart';
+import 'package:rx_command/rx_command.dart';
 
 import 'package:authflow/src/models/auth.dart';
 import 'package:authflow/src/screens/home.dart';
@@ -93,6 +93,24 @@ class _SignInChildState extends State<SignInChild> {
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<CommandResult<bool>>(
+        stream: sl<AuthManager>().signInUser.results,
+        builder: (context, snapshot) {
+          final result = snapshot.data;
+
+          if (result != null) {
+            if (result.isExecuting)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            if (result.hasError) return buildPage();
+          }
+
+          return buildPage();
+        });
+  }
+
+  Widget buildPage() {
     return SingleChildScrollView(
       padding: EdgeInsets.only(left: 16, right: 16, top: 40),
       child: Column(

@@ -9,13 +9,10 @@ abstract class APIService {
 class APIServiceInstance implements APIService {
   NetworkUtil _networkUtil = new NetworkUtil();
 
-  var rnd = new Random();
-
   String baseUrl = 'http://example.com/api';
 
   @override
   Future<bool> signInUser(Map credentials) async {
-    print("Credentials: $credentials");
     // TODO: Uncomment the API call
     // final String signInUrl = '$baseUrl/auth/signin';
 
@@ -29,11 +26,13 @@ class APIServiceInstance implements APIService {
 
     // Delays the sign in for a bit to mock an API call
     print("Starting fetch");
-    Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 5));
     print("Ending fetch");
     // Mocks validation from the API.
     // True: Successful sign in
     // False: Failed sign in
-    return Future.value(rnd.nextBool());
+    if (credentials['email'] == '' || credentials['password'] == '')
+      return false;
+    return true;
   }
 }

@@ -47,14 +47,17 @@ class AuthManagerInstance
     signInUser.results
         .where((authResult) => authResult.data != null)
         .listen((authResult) {
-      print("My ${authResult.data} is saved to local storage or database");
-      authStatus(AuthStatus.LOGGED_IN);
+      if (authResult.data == true) {
+        print("My ${authResult.data} is saved to local storage or database");
+        authStatus(AuthStatus.LOGGED_IN);
+      } else
+        print('Check your credentials');
     });
 
-    signOutUser = RxCommand.createAsyncNoParam<bool>(() {
+    signOutUser = RxCommand.createAsyncNoParam<bool>(() async {
       var rnd = new Random();
       print("Clearing out my local data");
-      Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 3));
       return Future.value(rnd.nextBool());
     });
 
@@ -71,9 +74,9 @@ class AuthManagerInstance
       }
     });
 
-    fetchSavedCredentials = RxCommand.createAsyncNoParam<bool>(() {
+    fetchSavedCredentials = RxCommand.createAsyncNoParam<bool>(() async {
       print("Fetching credentials");
-      Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 3));
       print("Finished fetching");
       return Future.value(false);
     });
