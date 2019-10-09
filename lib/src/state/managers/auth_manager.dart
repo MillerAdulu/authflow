@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:rx_command/rx_command.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -47,31 +45,19 @@ class AuthManagerInstance
     signInUser.results
         .where((authResult) => authResult.data != null)
         .listen((authResult) {
-      if (authResult.data == true) {
-        print("My ${authResult.data} is saved to local storage or database");
-        authStatus(AuthStatus.LOGGED_IN);
-      } else
-        print('Check your credentials');
+      print("My ${authResult.data} is saved to local storage or database");
+      authStatus(AuthStatus.LOGGED_IN);
     });
 
-    signOutUser = RxCommand.createAsyncNoParam<bool>(() async {
-      var rnd = new Random();
-      print("Clearing out my local data");
-      await Future.delayed(Duration(seconds: 3));
-      return Future.value(rnd.nextBool());
-    });
+    signOutUser =
+        RxCommand.createAsync<String, bool>(sl<APIService>().signOutUser);
 
     // Return authentication status which can be used as the last result
     // to perform auth checks as opposed to making the API calls again
     signOutUser.results
         .where((authResult) => authResult.data != null)
         .listen((authResult) {
-      if (authResult.data == true) {
-        print("Successfully logged out");
-        authStatus(AuthStatus.LOGGED_OUT);
-      } else {
-        print("An sign out error occured");
-      }
+      authStatus(AuthStatus.LOGGED_OUT);
     });
 
     fetchSavedCredentials = RxCommand.createAsyncNoParam<bool>(() async {

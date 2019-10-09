@@ -1,7 +1,8 @@
 import 'package:authflow/src/utils/http/network.dart';
 
 abstract class APIService {
-  Future<dynamic> signInUser(Map credentials);
+  Future<bool> signInUser(Map credentials);
+  Future<bool> signOutUser(String refreshToken);
 }
 
 class APIServiceInstance implements APIService {
@@ -30,7 +31,30 @@ class APIServiceInstance implements APIService {
     // True: Successful sign in
     // False: Failed sign in
     if (credentials['email'] == '' || credentials['password'] == '')
-      return false;
+      throw Exception('Check your credentials');
+    return true;
+  }
+
+  @override
+  Future<bool> signOutUser(String refreshToken) async {
+    // TODO: Uncomment the API call
+    // final String signOutUrl = '$baseUrl/auth/signout';
+
+    // dynamic response = await _networkUtil.postReq(signOutUrl, body: {
+    //   'token': refreshToken
+    // });
+
+    // if (response == null) return null;
+    // return response;
+
+    // Delays the sign out for a bit to mock an API call
+    print("Starting revoke");
+    await Future.delayed(Duration(seconds: 3));
+    print("Ending revoke");
+    // Mocks validation from the API.
+    // True: Successful sign in
+    // False: Failed sign in
+    if (refreshToken == '') throw Exception('Undefined token');
     return true;
   }
 }

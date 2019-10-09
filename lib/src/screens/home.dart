@@ -96,6 +96,6 @@ class _HomeParentState extends State<HomeParent> {
   }
 
   void signOut() async {
-    sl<AuthManager>().signOutUser();
+    sl<AuthManager>().signOutUser('Super Token');
   }
 }
