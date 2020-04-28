@@ -9,12 +9,13 @@ import 'package:authflow/src/utils/validators/password_validator.dart';
 
 abstract class AuthManager {
   RxCommand<AuthStatus, AuthStatus> authStatus;
-  RxCommand<Map, bool> signInUser;
+  RxCommand<void, bool> signInUser;
   RxCommand<void, bool> signOutUser;
   RxCommand<void, bool> fetchSavedCredentials;
 
   Function(String) get onEmailChanged;
   Stream<String> get email;
+
   Function(String) get onPasswordChanged;
   Stream<String> get password;
 }
@@ -26,7 +27,7 @@ class AuthManagerInstance
   RxCommand<AuthStatus, AuthStatus> authStatus;
 
   @override
-  RxCommand<Map, bool> signInUser;
+  RxCommand<void, bool> signInUser;
 
   @override
   RxCommand<void, bool> fetchSavedCredentials;
@@ -38,7 +39,12 @@ class AuthManagerInstance
     authStatus = RxCommand.createSync<AuthStatus, AuthStatus>(
         (authStatus) => authStatus);
 
-    signInUser = RxCommand.createAsync<Map, bool>(sl<APIService>().signInUser);
+    signInUser = RxCommand.createAsyncNoParam<bool>(() async {
+      String email = _emailController.value;
+      String password = _passwordController.value;
+      print("Calling service");
+      // sl<APIService>().signInUser(credentials)
+    });
 
     // Return authentication status which can be used as the last result
     // to perform auth checks as opposed to making the API calls again
@@ -68,11 +74,11 @@ class AuthManagerInstance
     });
   }
 
-  final PublishSubject<String> _emailController = PublishSubject<String>();
+  final BehaviorSubject<String> _emailController = BehaviorSubject<String>();
   Function(String) get onEmailChanged => _emailController.sink.add;
   Stream<String> get email => _emailController.stream.transform(validateEmail);
 
-  final PublishSubject<String> _passwordController = PublishSubject<String>();
+  final BehaviorSubject<String> _passwordController = BehaviorSubject<String>();
   Function(String) get onPasswordChanged => _passwordController.sink.add;
   Stream<String> get password =>
       _passwordController.stream.transform(validatePassword);
