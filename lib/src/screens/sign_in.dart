@@ -36,15 +36,29 @@ class SignInChild extends StatefulWidget {
 class _SignInChildState extends State<SignInChild> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   RxCommandListener _signInListener;
+
   RxCommandListener _authStatusListener;
 
   @override
   void initState() {
     super.initState();
 
-    _signInListener = RxCommandListener(sl<AuthManager>().signInUser,
-        onError: (error) => _onErrorSignIn(error));
+    _signInListener = RxCommandListener(
+      sl<AuthManager>().signInUser,
+      onIsBusy: () => print("This is authenticating"),
+      onNotBusy: () => print("Auth has stopped"),
+      onError: (error) => _onErrorSignIn(error),
+      onValue: (value){
+        if(value == true) {
+          // Navigator.of(context).push(route);
+        }
+        else {
+          // Navigator.of(context).push(route);
+        }
+      }
+    );
 
     _authStatusListener = RxCommandListener(sl<AuthManager>().authStatus,
         onValue: (authStatusValue) {
@@ -139,7 +153,7 @@ class _SignInChildState extends State<SignInChild> {
                     stream: sl<AuthManager>().email,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       return TextField(
-                        controller: _emailController,
+                        // controller: _emailController,
                         decoration: InputDecoration(
                             labelText: 'Email', errorText: snapshot.error),
                         onChanged: sl<AuthManager>().onEmailChanged,
@@ -171,11 +185,7 @@ class _SignInChildState extends State<SignInChild> {
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                         onPressed: () {
-                          final credentials = new Map();
-                          credentials['email'] = _emailController.text;
-                          credentials['password'] = _passwordController.text;
-
-                          sl<AuthManager>().signInUser(credentials);
+                          sl<AuthManager>().signInUser();
                         },
                       ),
                     ),
