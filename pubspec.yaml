@@ -26,10 +26,13 @@ dependencies:
   rxdart:
   rx_command:
   get_it:
+  built_value:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  built_value_generator:
 
 
 # For information on the generic Dart part of this file, see the

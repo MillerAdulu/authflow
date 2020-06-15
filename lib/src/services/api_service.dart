@@ -1,7 +1,12 @@
 part of services;
+
 abstract class APIService {
-  Future<bool> signInUser(Map credentials);
-  Future<bool> signOutUser(String refreshToken);
+  Future<AuthResponse> signInUser({
+    @required SignInCredsRequest credentials,
+  });
+  Future<bool> signOutUser({
+    @required String token,
+  });
 }
 
 class APIServiceInstance implements APIService {
@@ -10,50 +15,32 @@ class APIServiceInstance implements APIService {
   String baseUrl = 'http://example.com/api';
 
   @override
-  Future<bool> signInUser(Map credentials) async {
-    // TODO: Uncomment the API call
-    // final String signInUrl = '$baseUrl/auth/signin';
+  Future<AuthResponse> signInUser({
+    @required SignInCredsRequest credentials,
+  }) async {
+    final String signInUrl = '$baseUrl/auth/signin';
 
-    // dynamic response = await _networkUtil.postReq(signInUrl, body: {
-    //   'email': credentials['email'],
-    //   'password': credentials['password']
-    // });
+    Map<String, dynamic> response = await _networkUtil.postReq(
+      signInUrl,
+      body: credentials.toJson(),
+    );
 
-    // if (response == null) return null;
-    // return response;
-
-    // Delays the sign in for a bit to mock an API call
-    print("Starting fetch");
-    await Future.delayed(Duration(seconds: 5));
-    print("Ending fetch");
-    // Mocks validation from the API.
-    // True: Successful sign in
-    // False: Failed sign in
-    if (credentials['email'] == '' || credentials['password'] == '')
-      throw Exception('Check your credentials');
-    return true;
+    return AuthResponse.fromJson(response);
   }
 
   @override
-  Future<bool> signOutUser(String refreshToken) async {
-    // TODO: Uncomment the API call
-    // final String signOutUrl = '$baseUrl/auth/signout';
+  Future<bool> signOutUser({
+    @required String token,
+  }) async {
+    final String signOutUrl = '$baseUrl/auth/signout';
 
-    // dynamic response = await _networkUtil.postReq(signOutUrl, body: {
-    //   'token': refreshToken
-    // });
+    Map<String, dynamic> _response = await _networkUtil.postReq(
+      signOutUrl,
+      body: {"token": "sdfadsa"}.toString(),
+    );
 
-    // if (response == null) return null;
-    // return response;
+    print(_response);
 
-    // Delays the sign out for a bit to mock an API call
-    print("Starting revoke");
-    await Future.delayed(Duration(seconds: 3));
-    print("Ending revoke");
-    // Mocks validation from the API.
-    // True: Successful sign in
-    // False: Failed sign in
-    if (refreshToken == '') throw Exception('Undefined token');
     return true;
   }
 }

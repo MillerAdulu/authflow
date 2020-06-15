@@ -87,7 +87,7 @@ class _SignInState extends State<SignIn> {
       onWillPop: _onWillPopScope,
       child: Scaffold(
         key: _signInKey,
-        body: StreamBuilder<CommandResult<bool>>(
+        body: StreamBuilder<CommandResult<AuthResponse>>(
             stream: sl<AuthManager>().signInUser.results,
             builder: (context, snapshot) {
               final result = snapshot.data;

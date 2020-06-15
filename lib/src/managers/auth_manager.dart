@@ -2,7 +2,7 @@ part of managers;
 
 abstract class AuthManager {
   RxCommand<AuthStatus, AuthStatus> authStatus;
-  RxCommand<void, bool> signInUser;
+  RxCommand<void, AuthResponse> signInUser;
   RxCommand<void, bool> signOutUser;
   RxCommand<void, bool> fetchSavedCredentials;
 
@@ -20,7 +20,7 @@ class AuthManagerInstance
   RxCommand<AuthStatus, AuthStatus> authStatus;
 
   @override
-  RxCommand<void, bool> signInUser;
+  RxCommand<void, AuthResponse> signInUser;
 
   @override
   RxCommand<void, bool> fetchSavedCredentials;
@@ -32,14 +32,15 @@ class AuthManagerInstance
     authStatus = RxCommand.createSync<AuthStatus, AuthStatus>(
         (authStatus) => authStatus);
 
-    signInUser = RxCommand.createAsyncNoParam<bool>(() async {
-      String email = _emailController.value;
-      String password = _passwordController.value;
-      print("Calling service");
-      return await sl<APIService>().signInUser({
-        'email': email,
-        'password': password,
-      });
+    signInUser = RxCommand.createAsyncNoParam<AuthResponse>(() async {
+      SignInCredsRequest _creds = SignInCredsRequest(
+        (s) => s
+          ..email = _emailController.value
+          ..password = _passwordController.value,
+      );
+      return await sl<APIService>().signInUser(
+        credentials: _creds,
+      );
     });
 
     // Return authentication status which can be used as the last result
@@ -51,8 +52,9 @@ class AuthManagerInstance
       authStatus(AuthStatus.LOGGED_IN);
     });
 
-    signOutUser =
-        RxCommand.createAsync<String, bool>(sl<APIService>().signOutUser);
+    signOutUser = RxCommand.createAsync<String, bool>(
+      (String token) => sl<APIService>().signOutUser(token: token),
+    );
 
     // Return authentication status which can be used as the last result
     // to perform auth checks as opposed to making the API calls again
