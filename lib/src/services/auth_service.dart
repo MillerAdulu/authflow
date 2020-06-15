@@ -1,6 +1,6 @@
 part of services;
 
-abstract class APIService {
+abstract class AuthService {
   Future<AuthResponse> signInUser({
     @required SignInCredsRequest credentials,
   });
@@ -9,16 +9,16 @@ abstract class APIService {
   });
 }
 
-class APIServiceInstance implements APIService {
+class AuthServiceInstance implements AuthService {
   NetworkUtil _networkUtil = new NetworkUtil();
 
-  String baseUrl = 'http://example.com/api';
+  String _baseUrl = AuthflowConfig.instance.values.baseAPIUrl;
 
   @override
   Future<AuthResponse> signInUser({
     @required SignInCredsRequest credentials,
   }) async {
-    final String signInUrl = '$baseUrl/auth/signin';
+    final String signInUrl = '$_baseUrl/auth';
 
     Map<String, dynamic> response = await _networkUtil.postReq(
       signInUrl,
@@ -32,7 +32,7 @@ class APIServiceInstance implements APIService {
   Future<bool> signOutUser({
     @required String token,
   }) async {
-    final String signOutUrl = '$baseUrl/auth/signout';
+    final String signOutUrl = '$_baseUrl/auth/signout';
 
     Map<String, dynamic> _response = await _networkUtil.postReq(
       signOutUrl,

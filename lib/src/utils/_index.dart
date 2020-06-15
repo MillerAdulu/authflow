@@ -17,3 +17,4 @@ part 'validators/email_validator.dart';
 part 'validators/password_validator.dart';
 part 'http_client.dart';
 part 'router.dart';
+part 'constants.dart';

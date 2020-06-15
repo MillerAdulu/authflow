@@ -38,7 +38,7 @@ class AuthManagerInstance
           ..email = _emailController.value
           ..password = _passwordController.value,
       );
-      return await sl<APIService>().signInUser(
+      return await sl<AuthService>().signInUser(
         credentials: _creds,
       );
     });
@@ -53,7 +53,7 @@ class AuthManagerInstance
     });
 
     signOutUser = RxCommand.createAsync<String, bool>(
-      (String token) => sl<APIService>().signOutUser(token: token),
+      (String token) => sl<AuthService>().signOutUser(token: token),
     );
 
     // Return authentication status which can be used as the last result

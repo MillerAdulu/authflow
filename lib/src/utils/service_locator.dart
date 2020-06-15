@@ -4,7 +4,7 @@ GetIt sl = GetIt.instance;
 
 void setUpServiceLocator() {
   // Services
-  sl.registerLazySingleton<APIService>(() => APIServiceInstance());
+  sl.registerLazySingleton<AuthService>(() => AuthServiceInstance());
 
   // Managers
   sl.registerLazySingleton<AuthManager>(() => AuthManagerInstance());
