@@ -1,4 +1,4 @@
-import 'dart:async';
+part of utils;
 
 //const String _kMin8CharsOneUpperLetterOneLowerLetterOneNumber =
 // r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";

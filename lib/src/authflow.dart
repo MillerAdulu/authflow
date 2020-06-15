@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:authflow/src/utils/_index.dart';
+
 import 'package:authflow/src/screens/decision.dart';
 
 class AuthFlow extends StatelessWidget {
@@ -9,6 +11,7 @@ class AuthFlow extends StatelessWidget {
       title: 'Auth Flow',
       debugShowCheckedModeBanner: false,
       home: DecisionPage(),
+      onGenerateRoute: Router.generateRoute,
     );
   }
 }

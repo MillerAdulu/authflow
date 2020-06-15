@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rx_command/rx_command.dart';
 
+import 'package:authflow/src/managers/_index.dart';
+import 'package:authflow/src/utils/_index.dart';
+
 import 'package:authflow/src/screens/decision.dart';
-import 'package:authflow/src/state/managers/auth_manager.dart';
-import 'package:authflow/src/utils/service_locator.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -31,9 +32,11 @@ class _HomeParentState extends State<HomeParent> {
   void initState() {
     super.initState();
 
-    _userLogout = RxCommandListener(sl<AuthManager>().signOutUser,
-        onValue: (_) => _onValueSignOut(),
-        onError: (error) => _onErrorSignOut(error));
+    _userLogout = RxCommandListener(
+      sl<AuthManager>().signOutUser,
+      onValue: (_) => _onValueSignOut(),
+      onError: (error) => _onErrorSignOut(error),
+    );
   }
 
   @override

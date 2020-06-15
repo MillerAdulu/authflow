@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rx_command/rx_command.dart';
 
+import 'package:authflow/src/managers/_index.dart';
+import 'package:authflow/src/utils/_index.dart';
+
 import 'package:authflow/src/screens/home.dart';
 import 'package:authflow/src/screens/sign_in.dart';
-import 'package:authflow/src/state/managers/auth_manager.dart';
-import 'package:authflow/src/utils/service_locator.dart';
 
 class DecisionPage extends StatefulWidget {
   @override
@@ -43,8 +44,8 @@ class _DecisionPageState extends State<DecisionPage> {
       MaterialPageRoute newRoute =
           MaterialPageRoute(builder: (BuildContext contenxt) => page);
 
-      Navigator.of(context)
-          .pushAndRemoveUntil(newRoute, ModalRoute.withName('/decision'));
+      Navigator.of(context).pushAndRemoveUntil(
+          newRoute, ModalRoute.withName(Router.decisionRoute));
     });
   }
 }

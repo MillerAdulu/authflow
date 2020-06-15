@@ -1,5 +1,4 @@
-import 'dart:async';
-
+part of utils;
 const String _kEmailRule = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
 
 class EmailValidator {

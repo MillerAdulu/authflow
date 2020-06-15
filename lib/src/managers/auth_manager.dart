@@ -1,11 +1,4 @@
-import 'package:rx_command/rx_command.dart';
-import 'package:rxdart/subjects.dart';
-
-import 'package:authflow/src/models/auth.dart';
-import 'package:authflow/src/state/services/api_service.dart';
-import 'package:authflow/src/utils/service_locator.dart';
-import 'package:authflow/src/utils/validators/email_validator.dart';
-import 'package:authflow/src/utils/validators/password_validator.dart';
+part of managers;
 
 abstract class AuthManager {
   RxCommand<AuthStatus, AuthStatus> authStatus;
@@ -43,7 +36,10 @@ class AuthManagerInstance
       String email = _emailController.value;
       String password = _passwordController.value;
       print("Calling service");
-      // sl<APIService>().signInUser(credentials)
+      return await sl<APIService>().signInUser({
+        'email': email,
+        'password': password,
+      });
     });
 
     // Return authentication status which can be used as the last result

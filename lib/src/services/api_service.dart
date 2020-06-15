@@ -1,5 +1,4 @@
-import 'package:authflow/src/utils/http/network.dart';
-
+part of services;
 abstract class APIService {
   Future<bool> signInUser(Map credentials);
   Future<bool> signOutUser(String refreshToken);
