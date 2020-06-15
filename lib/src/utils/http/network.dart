@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkUtil {
@@ -81,24 +80,6 @@ class NetworkUtil {
     if (responseBody.isEmpty) return null;
 
     return json.decode(responseBody);
-  }
-
-  Future<dynamic> multipartFileUpload(String url, {Map body}) async {
-    final basicHeaders = await setBasicHeaders();
-
-    Map body = {
-      'name': 'superfile',
-      'file': http.MultipartFile.fromPath(
-          "application/octet-stream", "MyFileLocation.txt")
-    };
-    FormData formData = new FormData.from(body);
-
-    Dio dio = new Dio();
-
-    final response = await dio.post(url,
-        data: formData, options: Options(headers: {...basicHeaders}));
-
-    return response.data;
   }
 
   Future<dynamic> setBasicHeaders() async {

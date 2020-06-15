@@ -27,7 +27,6 @@ dependencies:
   rxdart:
   rx_command:
   get_it:
-  dio:
 
 dev_dependencies:
   flutter_test:
