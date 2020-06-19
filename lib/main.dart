@@ -15,5 +15,6 @@ void main() {
   );
 
   setUpServiceLocator();
+  
   runApp(AuthFlow());
 }

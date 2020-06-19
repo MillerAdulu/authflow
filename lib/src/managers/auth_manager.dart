@@ -2,9 +2,11 @@ part of managers;
 
 abstract class AuthManager {
   RxCommand<AuthStatus, AuthStatus> authStatus;
-  RxCommand<void, AuthResponse> signInUser;
+
   RxCommand<void, bool> signOutUser;
   RxCommand<void, bool> fetchSavedCredentials;
+  
+  RxCommand<void, AuthResponse> signInUser;
 
   Function(String) get onEmailChanged;
   Stream<String> get email;
@@ -38,6 +40,7 @@ class AuthManagerInstance
           ..email = _emailController.value
           ..password = _passwordController.value,
       );
+      
       return await sl<AuthService>().signInUser(
         credentials: _creds,
       );

@@ -5,3 +5,4 @@ import 'package:authflow/src/utils/_index.dart';
 import 'package:flutter/foundation.dart';
 
 part 'auth_service.dart';
+part 'api_service.dart';

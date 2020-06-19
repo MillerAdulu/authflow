@@ -1,3 +1,4 @@
+import 'package:authflow/src/models/_index.dart';
 import 'package:flutter/material.dart';
 import 'package:rx_command/rx_command.dart';
 
@@ -31,6 +32,8 @@ class _HomeParentState extends State<HomeParent> {
   @override
   void initState() {
     super.initState();
+
+    sl<VirusManager>().getViruses();
 
     _userLogout = RxCommandListener(
       sl<AuthManager>().signOutUser,
@@ -86,14 +89,16 @@ class _HomeParentState extends State<HomeParent> {
 
   Widget _buildPage() {
     return Center(
-      child: FlatButton(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-        color: Colors.red,
-        child: Text(
-          'Sign Out',
-          style: TextStyle(fontSize: 22, color: Colors.white),
-        ),
-        onPressed: signOut,
+      child: StreamBuilder<List<Virus>>(
+        stream: sl<VirusManager>().getViruses,
+        builder: (context, snap) {
+          if (snap.data != null)
+            return ListView.builder(
+                itemBuilder: (cont, i) => ListTile(
+                      title: Text(snap.data[i].virusName),
+                    ));
+          return CircularProgressIndicator();
+        },
       ),
     );
   }

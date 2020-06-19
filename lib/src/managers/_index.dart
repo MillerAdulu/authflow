@@ -7,3 +7,4 @@ import 'package:rx_command/rx_command.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'auth_manager.dart';
+part 'virus_manager.dart';

@@ -8,12 +8,14 @@ part of models;
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AuthResponse.serializer)
-      ..add(SignInCredsRequest.serializer))
+      ..add(SignInCredsRequest.serializer)
+      ..add(Virus.serializer))
     .build();
 Serializer<SignInCredsRequest> _$signInCredsRequestSerializer =
     new _$SignInCredsRequestSerializer();
 Serializer<AuthResponse> _$authResponseSerializer =
     new _$AuthResponseSerializer();
+Serializer<Virus> _$virusSerializer = new _$VirusSerializer();
 
 class _$SignInCredsRequestSerializer
     implements StructuredSerializer<SignInCredsRequest> {
@@ -95,6 +97,52 @@ class _$AuthResponseSerializer implements StructuredSerializer<AuthResponse> {
       switch (key) {
         case 'token':
           result.token = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$VirusSerializer implements StructuredSerializer<Virus> {
+  @override
+  final Iterable<Type> types = const [Virus, _$Virus];
+  @override
+  final String wireName = 'Virus';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, Virus object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'name',
+      serializers.serialize(object.virusName,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  Virus deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new VirusBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'name':
+          result.virusName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -271,6 +319,94 @@ class AuthResponseBuilder
   @override
   _$AuthResponse build() {
     final _$result = _$v ?? new _$AuthResponse._(token: token);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Virus extends Virus {
+  @override
+  final int id;
+  @override
+  final String virusName;
+
+  factory _$Virus([void Function(VirusBuilder) updates]) =>
+      (new VirusBuilder()..update(updates)).build();
+
+  _$Virus._({this.id, this.virusName}) : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Virus', 'id');
+    }
+    if (virusName == null) {
+      throw new BuiltValueNullFieldError('Virus', 'virusName');
+    }
+  }
+
+  @override
+  Virus rebuild(void Function(VirusBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  VirusBuilder toBuilder() => new VirusBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Virus && id == other.id && virusName == other.virusName;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, id.hashCode), virusName.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Virus')
+          ..add('id', id)
+          ..add('virusName', virusName))
+        .toString();
+  }
+}
+
+class VirusBuilder implements Builder<Virus, VirusBuilder> {
+  _$Virus _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _virusName;
+  String get virusName => _$this._virusName;
+  set virusName(String virusName) => _$this._virusName = virusName;
+
+  VirusBuilder();
+
+  VirusBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _virusName = _$v.virusName;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Virus other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$Virus;
+  }
+
+  @override
+  void update(void Function(VirusBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$Virus build() {
+    final _$result = _$v ?? new _$Virus._(id: id, virusName: virusName);
     replace(_$result);
     return _$result;
   }

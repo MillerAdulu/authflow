@@ -10,7 +10,7 @@ abstract class AuthService {
 }
 
 class AuthServiceInstance implements AuthService {
-  NetworkUtil _networkUtil = new NetworkUtil();
+  NetworkUtil _networkUtil = NetworkUtil();
 
   String _baseUrl = AuthflowConfig.instance.values.baseAPIUrl;
 
